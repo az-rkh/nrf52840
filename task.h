@@ -9,6 +9,7 @@ typedef struct task {
     uint32_t *sp;
     uint8_t priority;
     state_t state;
+    struct task *next;
 } task_t;
 
 void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int stack_size);
