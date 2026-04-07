@@ -5,6 +5,6 @@
 
 extern task_t *current_task;
 
-task_t scheduler_next(void);
+task_t *scheduler_next(void);
 
 #endif
