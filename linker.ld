@@ -1,18 +1,35 @@
-ENTRY(reset_handler)
+  ENTRY(reset_handler)
 
-MEMORY
-{
-    FLASH (rx): ORIGIN = 0x00000000, LENGTH = 1024K
-    SRAM (rwx): ORIGIN = 0x20000000, LENGTH = 256K
-}
+  MEMORY
+  {
+      FLASH (rx) : ORIGIN = 0x00027000, LENGTH = 0xCD000
+      RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x40000
+  }
 
+  SECTIONS
+  {
+      .text :
+      {
+          KEEP(*(.vectors))
+          *(.text*)
+          *(.rodata*)
+          __etext = .;
+      } > FLASH
 
+      .data : AT(__etext)
+      {
+          __data_start__ = .;
+          *(.data*)
+          __data_end__ = .;
+      } > RAM
 
-SECTIONS
-{
-    .isr_vector :
-    {
-        . = ALIGN(4);
-        KEEP(*(.isr_vector))
-    }
-}
+      .bss :
+      {
+          __bss_start__ = .;
+          *(.bss*)
+          *(COMMON)
+          __bss_end__ = .;
+      } > RAM
+
+      __StackTop = ORIGIN(RAM) + LENGTH(RAM);
+  }
