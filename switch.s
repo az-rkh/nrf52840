@@ -2,7 +2,7 @@
 .global pendsv_handler
 pendsv_handler:
     mrs r0, psp
-    stdmb r0!, {r4-r11}
+    stmdb r0!, {r4-r11}
     ldr r1, =current_task
     ldr r1, [r1]
     str r0, [r1]

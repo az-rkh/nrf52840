@@ -13,7 +13,7 @@
   .word default_handler   /* SVC */
   .word 0
   .word 0
-  .word pendsv_handler    /* PendSV */  ← change this
+  .word pendsv_handler    /* PendSV */
   .word default_handler   /* SysTick */
 
   .section .text
@@ -38,26 +38,6 @@
 
   4:  bl main
       b .
-
-  .thumb_func
-  pendsv_handler:
-      mrs r0, psp
-      stmdb r0!, {r4-r11}
-      ldr r1, =current_task
-      ldr r1, [r1]
-      str r0, [r1]
-
-      push {lr}
-      bl scheduler_next
-      pop {lr}
-
-      ldr r1, =current_task
-      str r0, [r1]
-      ldr r0, [r0]
-      ldmia r0!, {r4-r11}
-      msr psp, r0
-
-      bx lr
 
   .thumb_func
   default_handler:
