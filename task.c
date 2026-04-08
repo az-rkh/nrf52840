@@ -3,7 +3,6 @@
 #include "hw.h"
 #include "sched.h"
 
-int current_task = 0;
 task_t tasks[NPRIORITIES];
 
 void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int stack_size)

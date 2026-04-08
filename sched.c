@@ -27,4 +27,5 @@ void systick_init(uint32_t ticks_per_period)
 void systick_handler(void)
 {
     ticks++;
+    SCB_ICSR |= PENDSV_SET;
 }
