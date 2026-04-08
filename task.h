@@ -3,12 +3,11 @@
 
 #include <stdint.h>
 
-typedef enum state_t {READY, RUNNING, SLEEPING};
 
 typedef struct task {
     uint32_t *sp;
     uint8_t priority;
-    state_t state;
+    enum state {READY, RUNNING, SLEEPING};
     struct task *next;
 } task_t;
 

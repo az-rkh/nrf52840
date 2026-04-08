@@ -1,6 +1,10 @@
 #include <stdint.h>
 #include "task.h"
+#include "hw.h"
+#include "sched.h"
 
+int current_task = 0;
+task_t tasks[NPRIORITIES];
 
 void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int stack_size)
 {
@@ -27,4 +31,9 @@ void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int sta
     *(--sp) = 0;                /* r4 */
 
     task->sp = sp;
+}
+
+void task_sleep(uint32_t ms) 
+{
+    
 }

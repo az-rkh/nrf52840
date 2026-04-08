@@ -1,11 +1,11 @@
   .section .vectors, "a"
   .word __StackTop
   .word reset_handler
-  .word default_handler   /* NMI */
-  .word default_handler   /* HardFault */
-  .word default_handler   /* MemManage */
-  .word default_handler   /* BusFault */
-  .word default_handler   /* UsageFault */
+  .word nmi_handler       /* NMI */
+  .word hardfault_handler /* HardFault */
+  .word memmanage_handler /* MemManage */
+  .word busfault_handler  /* BusFault */
+  .word usagefault_handler /* UsageFault */
   .word 0
   .word 0
   .word 0
@@ -14,7 +14,7 @@
   .word 0
   .word 0
   .word pendsv_handler    /* PendSV */
-  .word default_handler   /* SysTick */
+  .word systick_handler   /* SysTick */
 
   .section .text
   .thumb_func
@@ -37,6 +37,26 @@
       b 3b
 
   4:  bl main
+      b .
+
+  .thumb_func
+  nmi_handler:
+      b .
+
+  .thumb_func
+  hardfault_handler:
+      b .
+
+  .thumb_func
+  memmanage_handler:
+      b .
+
+  .thumb_func
+  busfault_handler:
+      b .
+
+  .thumb_func
+  usagefault_handler:
       b .
 
   .thumb_func
