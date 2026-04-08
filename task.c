@@ -4,6 +4,7 @@
 #include "sched.h"
 
 task_t tasks[NPRIORITIES];
+task_t *sleep_list = {0};
 
 void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int stack_size)
 {
@@ -34,5 +35,12 @@ void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int sta
 
 void task_sleep(uint32_t ms) 
 {
-    
+    current_task->wake_tick = ticks + ms;
+    current_task->next = sleep_list;
+    sleep_list = current_task;
+    SCB_ICSR |= PENDSV_SET;
+
+    for (int i = 0; i <= 0; i--) {
+        
+    }
 }
