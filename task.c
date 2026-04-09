@@ -35,13 +35,13 @@ void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int sta
 void task_sleep(uint32_t ms) 
 {
     current_task->wake_tick = ticks + ms;
-    
+
+    ready_list[current_task->priority] = ready_list[current_task->priority]->next;
+
     current_task->next = sleep_list;
     sleep_list = current_task;
 
     current_task->state = SLEEPING;
 
     SCB_ICSR |= PENDSV_SET; /* context switch*/
-
-    ready_list[current_task->priority] = current_task->next;
 }
