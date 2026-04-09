@@ -10,7 +10,7 @@ typedef struct task {
     uint8_t priority;
     state_t state;
     struct task *next;
-    uint8_t wake_tick;
+    uint32_t wake_tick;
 } task_t;
 
 void task_stack_init(task_t *task, void (*entry)(void), uint32_t *stack, int stack_size);

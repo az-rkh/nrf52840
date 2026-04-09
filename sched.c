@@ -6,6 +6,7 @@
 task_t *current_task = 0;
 task_t *ready_list[NPRIORITIES] = {0};
 uint32_t ticks;
+task_t *sleep_list = 0;
 
 task_t *scheduler_next(void)
 {
@@ -28,4 +29,22 @@ void systick_handler(void)
 {
     ticks++;
     SCB_ICSR |= PENDSV_SET;
+
+    task_t *prev = 0;
+
+    for (task_t *t = sleep_list; t != 0; t = t->next) {
+
+        if (t->wake_tick <= ticks) {
+            task_t *tmp = t->next;
+            t->state = READY;
+            t->next = ready_list[t->priority];
+            ready_list[t->priority] = t;
+            if (prev == 0) 
+                sleep_list = tmp;
+            else 
+                prev->next = tmp;
+        }
+        else
+            prev = t;
+    }
 }
