@@ -2,7 +2,6 @@
 #define TASK_H
 
 #include <stdint.h>
-#include "sched.h"
 
 #define NPRIORITIES 8
 
