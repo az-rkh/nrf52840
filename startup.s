@@ -1,3 +1,4 @@
+  .syntax unified
   .section .vectors, "a"
   .word __StackTop
   .word reset_handler

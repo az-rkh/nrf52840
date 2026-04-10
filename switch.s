@@ -1,3 +1,4 @@
+.syntax unified
 .thumb_func
 .global pendsv_handler
 pendsv_handler:
