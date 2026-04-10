@@ -3,9 +3,6 @@
 
 #include "task.h"
 
-#define NPRIORITIES 8
-
-
 extern uint32_t ticks;
 
 extern task_t *current_task;
