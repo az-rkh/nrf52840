@@ -28,11 +28,12 @@ void systick_init(uint32_t ticks_per_period)
 void systick_handler(void)
 {
     ticks++;
-    SCB_ICSR |= PENDSV_SET;
-
+    
     task_t *prev = 0;
 
-    for (task_t *t = sleep_list; t != 0; t = t->next) {
+    task_t *t = sleep_list;
+
+    while (t != 0) {
 
         if (t->wake_tick <= ticks) {
             task_t *tmp = t->next;
@@ -43,8 +44,15 @@ void systick_handler(void)
                 sleep_list = tmp;
             else 
                 prev->next = tmp;
+
+            t = tmp;
         }
-        else
+        
+        else {
             prev = t;
+            t = t->next;
+        }
     }
+
+    SCB_ICSR |= PENDSV_SET;
 }
