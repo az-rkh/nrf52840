@@ -13,7 +13,7 @@ void task1(void)
 {
     while (1) {
         P0_OUT ^= (1 << LED_BLUE_PIN);
-        task_sleep(500);
+        task_sleep(100);
     }
 }
 
@@ -45,4 +45,5 @@ int main()
 
     current_task = scheduler_next();
     systick_init(64000);
+    start_scheduler();
 }
